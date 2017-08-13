@@ -27,8 +27,8 @@ https://github.com/hakobera/nvmw
 Create a server that listens on a given port number with the following code:
 
 ```
-var koa = require('koa');
-var app = koa();
+var Koa = require('koa');
+var app = new Koa();
 
 // handlers here
 // app.use(handlers);
@@ -45,9 +45,9 @@ var port = process.argv[2];
 Handlers can be anonymous generate functions or separately declared (just like in javascript :P):
 
 ```
-app.use(function *() {
+app.use(function *(ctx) {
   // you can set the response body in handler like this
-  this.body = 'hello';
+  ctx.body = 'hello';
 });
 ```
 
@@ -63,7 +63,7 @@ Or walk through the “Learn Generators” NodeSchool workshop:
 https://github.com/isRuslan/learn-generators
 ```
 
-A Koa Context(`this` in middlewares) encapsulates node's `request` and `response` objects into a single object which provides many helpful methods for writing web applications and APIs. To learn more about Koa Context, please check the Koa website:
+A Koa Context(`ctx` in middlewares) encapsulates node's `request` and `response` objects into a single object which provides many helpful methods for writing web applications and APIs. To learn more about Koa Context, please check the Koa website:
 
 ```
 http://koajs.com
