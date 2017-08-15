@@ -3,17 +3,17 @@ var parse = require('co-body');
 
 var app = koa();
 
-app.use(function* (next) {
+app.use(async (ctx, next) => {
   // only accept POST request
-  if (this.method !== 'POST') return yield next;
+  if (ctx.method !== 'POST') return await next;
 
   // max body size limit to `1kb`
-  var body = yield parse(this, { limit: '1kb' });
+  var body = await parse(ctx, { limit: '1kb' });
 
   // if body.name not exist, respond `400`
-  if (!body.name) this.throw(400, '.name required');
+  if (!body.name) ctx.throw(400, '.name required');
 
-  this.body = body.name.toUpperCase();
+  ctx.body = body.name.toUpperCase();
 });
 
 app.listen(process.argv[2]);

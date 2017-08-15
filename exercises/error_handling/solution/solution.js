@@ -1,26 +1,26 @@
-var koa = require('koa');
+var Koa = require('koa');
 
-var app = koa();
+var app = new Koa();
 
-app.use(errorHandler());
+app.use(errorhandler());
 
-app.use(function* () {
-  if (this.path === '/error') throw new Error('ooops');
-  this.body = 'OK';
+app.use(async (ctx, next) => {
+  if (ctx.path === '/error') throw new error('ooops');
+  ctx.body = 'ok';
 });
 
-function errorHandler() {
-  return function* (next) {
+function errorhandler() {
+  return async (ctx, next) => {
     // we catch all downstream errors here
     try {
-      yield next;
+      await next;
     } catch (err) {
       // set response status
-      this.status = 500;
+      ctx.status = 500;
       // set response body
-      this.body = 'internal server error';
+      ctx.body = 'internal server error';
       // can emit on app for log
-      // this.app.emit('error', err, this);
+      // ctx.app.emit('error', err, ctx);
     }
   };
 }
